@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deluxe Saloon</title>
+  <meta name="description" content="Your playlist, streamed straight from YouTube Music." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Noto+Serif+Devanagari:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg" id="bg">
+  <div class="bg-layer active" id="bg-layer-a" style="background-image: url('assets/bg.png');"></div>
+  <div class="bg-layer" id="bg-layer-b"></div>
+ </div>
+  <div class="bg-overlay"></div>
+
+  <header class="topbar">
+    <div class="clock" id="live-clock">--:--:--</div>
+    <div class="badge" id="badge">Super Express</div>
+    <nav class="links">
+      <a id="spotify-link" href="#" target="_blank" rel="noopener">Spotify</a>
+      <a id="ytmusic-link" href="#" target="_blank" rel="noopener">YT Music</a>
+      
+    </nav>
+  </header>
+  <section class="hero">
+  <h2 class="hero-title" id="hero-title">सुपर EXPRESS</h2>
+  <p class="hero-subtitle" id="hero-subtitle">जाने हैन त ?</p>
+  </section>
+  <main class="player-card">
+  <div id="disc-rotor" class="disc">
+    <img id="cover" class="cover" src="assets/placeholder-cover.svg" alt="Album art" />
+  </div>
+
+  <div class="now-playing-body">
+    <div class="now-playing-text">
+      <h1 id="track-title">Loading…</h1>
+      <p id="track-artist"></p>
+    </div>
+    <div class="progress">
+      <div class="progress-bar" id="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="times">
+        <span id="time-current">0:00</span>
+        <span id="time-duration">0:00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="prev-btn" aria-label="Previous track">⏮</button>
+    <button id="play-btn" aria-label="Play or pause">▶</button>
+    <button id="next-btn" aria-label="Next track">⏭</button>
+  </div>
+
+  
+
+  <audio id="horn-sound" src="assets/horn.mp3" preload="auto"></audio>
+  <div id="yt-player" style="display:none"></div>
+</main>
+<p id="status-msg" class="status-msg"></p>
+
+  <aside class="routes-panel" id="routes-panel">
+    <button class="routes-toggle" id="routes-toggle" aria-expanded="false" aria-controls="routes-list">ROUTES</button>
+    <div class="routes-list" id="routes-list" aria-hidden="true"></div>
+  </aside>
+  <button id="horn-btn">📯</button>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,486 @@
+:root {
+  --gold: #c9a24b;
+  --ink: #f4efe6;
+  --ink-dim: rgba(244, 239, 230, 0.65);
+  --card-bg: rgba(15, 13, 11, 0.45);
+  --card-border: rgba(244, 239, 230, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* ---------- Background wallpaper ---------- */
+/* Swap the file referenced here (or the CSS var below) for your own image. */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  filter: saturate(1.05);
+}
+
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.bg-layer.active {
+  opacity: 1;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 32px;
+}
+
+.topbar { position: relative; }
+
+.clock {
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Inter', monospace;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+  background: rgba(15, 13, 11, 0.35);
+  border: 1px solid var(--card-border);
+  padding: 6px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+
+
+.links {
+  display: flex;
+  gap: 20px;
+}
+
+.links a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.15s ease;
+}
+
+.links a:hover,
+.links a:focus-visible {
+  color: var(--gold);
+}
+
+
+/* ---------- Player card ---------- */
+.player-card {
+  position: fixed;
+  /* Centered horizontally where the arrow points */
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(15, 13, 11, 0.55);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 14px 22px 14px 14px;
+  max-width: min(560px, calc(100vw - 48px));
+  text-align: left;
+}
+
+.now-playing-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  justify-content: center;
+}
+
+.cover-container {
+  /* Reduced from 108px to 80px to make the disc smaller */
+  width: 80px; 
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.disc {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+.disc .cover { width: 100%; height: 100%; object-fit: cover; }
+
+.now-playing-body { min-width: 0; flex: 1; }
+
+.now-playing-text { min-width: 0; }
+
+
+.disc {
+  position: relative;
+}
+
+.disc::after {
+  content: "";
+  position: absolute;
+  inset: 43% 43%;
+  border-radius: 50%;
+  background: rgba(10, 8, 6, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(244, 239, 230, 0.1);
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.disc {
+  animation: spin 12s linear infinite;
+  animation-play-state: paused;
+}
+
+.disc.spinning {
+  animation-play-state: running;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disc.spinning {
+    animation-duration: 60s;
+  }
+}
+
+.track-meta {
+  text-align: left;
+  min-width: 0;
+}
+
+#track-title {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#track-artist {
+  font-size: 12px;
+  margin: 2px 0 0;
+  color: var(--ink-dim);
+}
+
+.progress { width: 100%; margin-top: 8px; }
+
+.progress-bar {
+  height: 4px;
+  width: 100%;
+  background: rgba(244, 239, 230, 0.18);
+  border-radius: 999px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--gold);
+  border-radius: 999px;
+  transition: width 0.2s linear;
+}
+
+.times {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-dim);
+  margin-top: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.controls button {
+  background: none;
+  border: none;
+  color: var(--ink);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+#horn-btn {
+  position: fixed;
+  /* 80px places it neatly below the topbar links */
+  top: 80px; 
+  /* 32px matches the padding of your .topbar, aligning it perfectly with "YT Music" */
+  right: 32px; 
+  z-index: 999; /* Guarantees it stays above all other layers */
+  
+  width: 72px; 
+  height: 72px;
+  font-size: 32px;
+  
+  background: rgba(15, 13, 11, 0.65);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(244, 239, 230, 0.14);
+  border-radius: 50%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  cursor: pointer;
+/* Adds the continuous rotation using your existing keyframes */
+  animation: spin 8s linear infinite;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+#horn-btn:hover {
+  background: rgba(201, 162, 75, 0.2);
+  border-color: var(--gold);
+  /* Pauses the rotation when the user hovers over it */
+  animation-play-state: paused; 
+}
+
+#horn-btn:active {
+  /* Using a slightly more opaque background for the active "click" state instead of scaling */
+  background: rgba(201, 162, 75, 0.4);
+}
+
+.controls button:hover { background: rgba(244, 239, 230, 0.1); }
+
+.controls button:active {
+  transform: scale(0.94);
+}
+
+#play-btn { width: 40px; height: 40px; border: 1px solid var(--card-border); font-size: 18px; display: flex; align-items: center; justify-content: center; line-height: 1; }
+
+.connect-btn {
+  margin-top: 30px;
+  background: var(--gold);
+  color: #191410;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.15s ease;
+}
+
+.connect-btn:hover { filter: brightness(1.08); }
+.connect-btn:active { transform: scale(0.97); }
+.connect-btn[hidden] { display: none; }
+
+.routes-panel {
+  position: fixed;
+  left: 0;
+  /* Changed from 50% to 25% to move the entire section significantly higher */
+  top: 25%; 
+  transform: translateY(-25%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Added a drop shadow to the whole panel for depth */
+  filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+.routes-toggle {
+  /* Removed writing-mode and text-orientation to make text horizontal */
+  background: rgba(15, 13, 11, 0.65); /* Slightly more opaque base */
+  color: var(--ink);
+  border: 1px solid rgba(244, 239, 230, 0.14);
+  border-left: none;
+  border-radius: 0 12px 12px 0;
+  /* Increased padding to look better as a horizontal button */
+  padding: 16px 24px; 
+  cursor: pointer;
+  font-size: 14px; /* Slightly larger text */
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  /* Added smooth transition for the hover effects */
+  transition: all 0.3s ease; 
+}
+
+.routes-panel:hover .routes-toggle,
+.routes-toggle[aria-expanded="true"] {
+  color: var(--gold);
+  border-color: rgba(201, 162, 75, 0.8);
+  /* Darken the background slightly on hover/active for contrast */
+  background: rgba(20, 18, 15, 0.85); 
+}
+
+.routes-list {
+  max-height: 0;
+  overflow: hidden;
+  /* Smoother cubic-bezier animation for the dropdown */
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease; 
+  background: rgba(15, 13, 11, 0.78);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(244, 239, 230, 0.12);
+  border-left: none;
+  border-radius: 0 16px 16px 0;
+  /* Adds a tiny modern gap between the toggle button and the list */
+  margin-top: 4px; 
+}
+
+.routes-panel:hover .routes-list,
+.routes-toggle[aria-expanded="true"] + .routes-list {
+  max-height: 350px;
+  padding: 16px 12px;
+}
+
+.route-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px; /* Slightly more breathable padding */
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-radius: 12px; /* Softened the pill-shape to fit a modern layout better */
+  margin-bottom: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.route-item:last-child {
+  margin-bottom: 0;
+}
+
+.route-item:hover,
+.route-item:focus-visible {
+  background: rgba(201, 162, 75, 0.12);
+  color: var(--gold);
+  /* Added a micro-interaction: text shifts slightly right on hover */
+  transform: translateX(4px); 
+}
+
+.route-item.active {
+  /* Changed to a subtle gradient fade for a more premium look */
+  background: linear-gradient(90deg, rgba(201, 162, 75, 0.22) 0%, transparent 100%);
+  border-left: 3px solid var(--gold);
+  padding-left: 13px; /* Compensates for the 3px border so text doesn't jump */
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.status-msg {
+  position: fixed;
+  left: 24px;
+  bottom: 4px;
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+.hero {
+  position: fixed;
+  left: 50px;
+  top: 50px;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none; /* clicks pass through to routes/background */
+  z-index: 0;
+  transform: translateY(-85px);
+}
+
+.hero-title {
+  font-family: 'Fraunces', 'Noto Serif Devanagari', serif;
+  font-weight: 500;
+  font-size: clamp(40px, 9vw, 120px);
+  color: var(--ink);
+  margin: 0;
+  text-shadow: 0 6px 40px rgba(0, 0, 0, 0.55);
+}
+
+.hero-subtitle {
+  margin: 10px 0 0;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  transform: translateY(-70px);
+}
+
+@media (max-width: 560px) {
+  .player-card { 
+    left: 50%; 
+    bottom: 20px; 
+    transform: translateX(-50%);
+    width: calc(100vw - 40px); 
+    max-width: none; 
+  }
+
+  .now-playing-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .track-meta {
+    text-align: center;
+  }
+
+  .cover-container {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar { padding: 20px; }
+  .cover-container { width: 110px; height: 110px; }
+}
