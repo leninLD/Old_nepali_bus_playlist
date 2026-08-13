@@ -160,7 +160,7 @@ function updateTrackInfo() {
 }
 // ---------------- Background slideshow ----------------
 // ---------------- Background slideshow (crossfade) ----------------
-const BG_IMAGES = ["assets/bg.png", "assets/bg4.png", "assets/bg3.png","assets/bg2.png", "assets/bg5.png"];
+const BG_IMAGES = ["assets/bg.png","assets/bg3.png","assets/bg2.png"];
 let bgIndex = 0;
 let activeLayer = "a";
 
