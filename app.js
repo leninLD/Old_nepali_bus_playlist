@@ -1,5 +1,4 @@
-// ---------------------------------------------------------------
-// Deluxe-Saloon-style YouTube Music player
+// --------------------------------------------------------------
 // No login, no premium account needed — uses the free YouTube
 // IFrame Player API to stream a public/unlisted playlist.
 // ---------------------------------------------------------------
@@ -71,7 +70,8 @@ window.onYouTubeIframeAPIReady = () => {
     playerVars: {
       listType: "playlist",
       list: PLAYLIST_ID,
-      autoplay: 0,
+      autoplay: 1,
+      mute: 1,
       controls: 0,
       disablekb: 1,
       playsinline: 1,
@@ -178,7 +178,7 @@ function startBackgroundSlideshow() {
     hidden.classList.add("active");
     showing.classList.remove("active");
     activeLayer = activeLayer === "a" ? "b" : "a";
-  }, 10000);
+  }, 15000);
 }
 startBackgroundSlideshow();
 
@@ -194,6 +194,23 @@ function startClock() {
   setInterval(tick, 1000);
 }
 startClock();
+// Autoplay starts muted (browsers always allow that). Unmute automatically
+// on the visitor's very first interaction with the page, whatever it is.
+function unlockAudioOnFirstInteraction() {
+  const unlock = () => {
+    if (ytPlayer && typeof ytPlayer.unMute === "function") {
+      ytPlayer.unMute();
+      ytPlayer.setVolume(80);
+    }
+    document.removeEventListener("click", unlock);
+    document.removeEventListener("touchstart", unlock);
+    document.removeEventListener("keydown", unlock);
+  };
+  document.addEventListener("click", unlock, { once: true });
+  document.addEventListener("touchstart", unlock, { once: true });
+  document.addEventListener("keydown", unlock, { once: true });
+}
+unlockAudioOnFirstInteraction();
 
 function clearNowPlayingUI() {
   els.title.textContent = "Loading…";

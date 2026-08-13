@@ -18,7 +18,7 @@ const CONFIG = {
   ROUTES: [
     {
       name: "Kathmandu Valley Corner  → Ratna Park",
-      ytMusicUrl: "https://music.youtube.com/playlist?list=PLcFw7EqNgi24",
+      ytMusicUrl: "https://music.youtube.com/playlist?list=PLUvTh1-TDGZc&si=fjYronoVE2zyphHE",
     },
     {
       name: "Kathmandu → Nuwakot",
