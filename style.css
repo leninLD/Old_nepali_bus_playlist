@@ -80,7 +80,7 @@ body {
   transform: translate(-50%, calc(-50% + 1cm));
   font-family: 'Fraunces', 'Noto Serif Devanagari', serif;
   font-weight: 600;
-  font-size: clamp(24px, 4vw, 56px);
+  font-size: clamp(50px, 4vw, 56px);
   color: var(--ink);
   white-space: nowrap;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
@@ -112,43 +112,43 @@ body {
   position: fixed;
   /* Centered horizontally where the arrow points */
   left: 50%;
-  bottom: 24px;
+  bottom: 20px;
   transform: translateX(-50%);
   z-index: 5;
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
   background: rgba(15, 13, 11, 0.55);
   backdrop-filter: blur(14px);
   border: 1px solid var(--card-border);
-  border-radius: 20px;
-  padding: 14px 22px 14px 14px;
-  max-width: min(560px, calc(100vw - 48px));
+  border-radius: 16px;
+  padding: 10px 16px 10px 10px;
+  max-width: min(440px, calc(100vw - 48px));
   text-align: left;
 }
 
 .now-playing-row {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
   width: 100%;
   justify-content: center;
 }
 
 .cover-container {
-  /* Reduced from 108px to 80px to make the disc smaller */
-  width: 80px; 
-  height: 80px;
+  /* Reduced from 80px to 58px to make the whole card more compact */
+  width: 58px; 
+  height: 58px;
   flex-shrink: 0;
 }
 
 .disc {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
 }
 .disc .cover { width: 100%; height: 100%; object-fit: cover; }
 
@@ -205,7 +205,7 @@ body {
 
 #track-title {
   font-family: 'Fraunces', serif;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   margin: 0;
   white-space: nowrap;
@@ -214,15 +214,15 @@ body {
 }
 
 #track-artist {
-  font-size: 12px;
+  font-size: 11px;
   margin: 2px 0 0;
   color: var(--ink-dim);
 }
 
-.progress { width: 100%; margin-top: 8px; }
+.progress { width: 100%; margin-top: 6px; }
 
 .progress-bar {
-  height: 4px;
+  height: 3px;
   width: 100%;
   background: rgba(244, 239, 230, 0.18);
   border-radius: 999px;
@@ -241,25 +241,25 @@ body {
 .times {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--ink-dim);
-  margin-top: 8px;
+  margin-top: 6px;
   font-variant-numeric: tabular-nums;
 }
 
 .controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   flex-shrink: 0;
 }
 .controls button {
   background: none;
   border: none;
   color: var(--ink);
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
-  padding: 8px;
+  padding: 6px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -279,7 +279,7 @@ body {
   height: 72px;
   font-size: 32px;
   
-  background: rgba(15, 13, 11, 0.65);
+  background: rgba(141, 100, 82, 0.65);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(244, 239, 230, 0.14);
   border-radius: 50%;
@@ -306,13 +306,20 @@ body {
   background: rgba(201, 162, 75, 0.4);
 }
 
+#horn-btn img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
 .controls button:hover { background: rgba(244, 239, 230, 0.1); }
 
 .controls button:active {
   transform: scale(0.94);
 }
 
-#play-btn { width: 40px; height: 40px; border: 1px solid var(--card-border); font-size: 18px; display: flex; align-items: center; justify-content: center; line-height: 1; }
+#play-btn { width: 32px; height: 32px; border: 1px solid var(--card-border); font-size: 15px; display: flex; align-items: center; justify-content: center; line-height: 1; }
 
 .connect-btn {
   margin-top: 30px;
@@ -456,13 +463,13 @@ body {
   }
 
   .cover-container {
-    width: 130px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
   }
 }
 
 @media (max-width: 480px) {
   .topbar { padding: 20px; }
-  .cover-container { width: 110px; height: 110px; }
+  .cover-container { width: 85px; height: 85px; }
   .topbar-title { font-size: 13px; }
 }
